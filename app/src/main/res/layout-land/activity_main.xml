@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity" >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/notaEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:ems="6"
+            android:hint="@string/notaTextViewHint"
+            android:inputType="numberDecimal"
+            android:minHeight="48dp"
+            android:textAlignment="center"
+            android:textSize="@dimen/textSize"
+            app:layout_constraintEnd_toStartOf="@+id/scrollView2"
+            app:layout_constraintStart_toEndOf="@+id/notaTextView"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/notaTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/notaTextView"
+            android:textSize="@dimen/textSize"
+            app:layout_constraintBaseline_toBaselineOf="@+id/notaEditText"
+            app:layout_constraintEnd_toStartOf="@+id/notaEditText"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/pesoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/pesoTextView"
+            android:textSize="@dimen/textSize"
+            app:layout_constraintBaseline_toBaselineOf="@+id/pesoEditText"
+            app:layout_constraintEnd_toStartOf="@+id/pesoEditText"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/pesoEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:ems="6"
+            android:hint="@string/pesoTextViewHint"
+            android:inputType="number"
+            android:minHeight="48dp"
+            android:textAlignment="center"
+            android:textSize="@dimen/textSize"
+            app:layout_constraintEnd_toStartOf="@+id/scrollView2"
+            app:layout_constraintStart_toEndOf="@+id/pesoTextView"
+            app:layout_constraintTop_toBottomOf="@+id/notaEditText" />
+
+        <Button
+            android:id="@+id/adicionarButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/addSubjectButtonText"
+            app:layout_constraintEnd_toStartOf="@+id/scrollView2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nomeEditText" />
+
+        <TextView
+            android:id="@+id/nomeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/nomeTextView"
+            app:layout_constraintBaseline_toBaselineOf="@+id/nomeEditText"
+            app:layout_constraintEnd_toStartOf="@+id/nomeEditText"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <EditText
+            android:id="@+id/nomeEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:ems="6"
+            android:hint="@string/nomeEditText"
+            android:inputType="textPersonName"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@+id/scrollView2"
+            app:layout_constraintStart_toEndOf="@+id/nomeTextView"
+            app:layout_constraintTop_toBottomOf="@+id/pesoEditText" />
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="380dp"
+            android:layout_height="150sp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TableLayout
+                android:id="@+id/subjectsTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TableRow
+                    android:id="@+id/headersRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/nomeHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/nomeHeader"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/textSize" />
+
+                    <TextView
+                        android:id="@+id/notaHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/notaHeader"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/textSize" />
+
+                    <TextView
+                        android:id="@+id/pesoHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/pesoHeader"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/textSize" />
+                </TableRow>
+
+            </TableLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/calcularButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/calculateButton"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/scrollView2"
+            app:layout_constraintStart_toStartOf="@+id/scrollView2"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/ApresentaCRTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/apresentaCR"
+            android:textSize="@dimen/textSize"
+            android:visibility="gone"
+            app:layout_constraintBaseline_toBaselineOf="@+id/CRTextView"
+            app:layout_constraintEnd_toStartOf="@+id/CRTextView"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@+id/scrollView2"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/CRTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="TextView"
+            android:textSize="@dimen/textSize"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/scrollView2"
+            app:layout_constraintStart_toEndOf="@+id/ApresentaCRTextView"
+            app:layout_constraintTop_toBottomOf="@+id/calcularButton"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

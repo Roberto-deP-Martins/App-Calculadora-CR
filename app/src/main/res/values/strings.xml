@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Calculadora CR</string>
+    <string name="notaTextView">Nota:</string>
+    <string name="notaTextViewHint">Inserir nota</string>
+    <string name="pesoTextView">Peso:</string>
+    <string name="pesoTextViewHint">Inserir peso</string>
+    <string name="pesoToast">Carga horária ou créditos</string>
+    <string name="nomeTextView">Nome (Opcional):</string>
+    <string name="addSubjectButtonText">Adicionar disciplina</string>
+    <string name="nomeEditText">Inserir nome</string>
+    <string name="nomeHeader">Nome</string>
+    <string name="notaHeader">Nota</string>
+    <string name="pesoHeader">Peso</string>
+    <string name="calculateButton">Calcular</string>
+    <string name="apresentaCR">Seu CR é:</string>
+    <string name="noValues">É preciso inserir valores para nota e peso!</string>
+</resources>
