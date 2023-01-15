@@ -14,4 +14,6 @@
     <string name="calculateButton">Calcular</string>
     <string name="apresentaCR">Seu CR é:</string>
     <string name="noValues">É preciso inserir valores para nota e peso!</string>
+    <string name="disciplinaText">Disciplina</string>
+    <string name="resetButton">Remover Disciplinas</string>
 </resources>

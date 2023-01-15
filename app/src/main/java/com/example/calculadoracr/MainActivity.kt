@@ -9,14 +9,13 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.view.allViews
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import com.example.calculadoracr.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private var subjectCount = 1
+    private var subjectCount = 0
     private val rowsDict = mutableMapOf<String, Pair<Float, Int>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         binding.pesoTextView.setOnClickListener { Toast.makeText(applicationContext,R.string.pesoToast, Toast.LENGTH_SHORT).show() }
         binding.adicionarButton.setOnClickListener { addSubject() }
         binding.calcularButton.setOnClickListener { calculaCR() }
+        binding.resetButton.setOnClickListener { reset() }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -42,15 +42,19 @@ class MainActivity : AppCompatActivity() {
 
         if (binding.notaEditText.text.toString().toFloatOrNull() != null &&
             binding.pesoEditText.text.toString().toIntOrNull() != null) {
-            val newRow: TableRow = TableRow(this)
+            val newRow = TableRow(this)
 
             val subjectName = TextView(this)
             subjectName.text =
-                if (binding.nomeEditText.text.toString() == "") "Disciplina $subjectCount" else binding.nomeEditText.text
+                if (binding.nomeEditText.text.toString() == "") {
+                    "❌ ${resources.getString(R.string.disciplinaText)} ${subjectCount + 1}"
+                }
+                else {
+                    "❌" + binding.nomeEditText.text
+                }
             subjectName.width = binding.nomeHeader.width
             subjectName.textAlignment = View.TEXT_ALIGNMENT_CENTER
             subjectName.textSize = resources.getDimension(R.dimen.textSize) / resources.displayMetrics.density
-            Log.i("Tamanho", resources.getDimension(R.dimen.textSize).toString())
 
             val subjectGrade = TextView(this)
             subjectGrade.text = binding.notaEditText.text
@@ -79,6 +83,7 @@ class MainActivity : AppCompatActivity() {
             subjectCount += 1
 
             binding.calcularButton.visibility = View.VISIBLE
+            binding.resetButton.visibility = View.VISIBLE
         }
         else {
             Toast.makeText(applicationContext,R.string.noValues, Toast.LENGTH_LONG).show()
@@ -92,7 +97,7 @@ class MainActivity : AppCompatActivity() {
         rowsDict.remove(nameRow.text.toString())
         if (rowsDict.isEmpty()) binding.calcularButton.visibility = View.GONE
         subjectCount -= 1
-
+        if (subjectCount == 0) binding.resetButton.visibility = View.GONE
     }
 
     private fun calculaCR() {
@@ -107,5 +112,12 @@ class MainActivity : AppCompatActivity() {
         binding.CRTextView.text = "%.2f".format(numerador / divisor)
         binding.ApresentaCRTextView.visibility = View.VISIBLE
         binding.CRTextView.visibility = View.VISIBLE
+    }
+
+    private fun reset() {
+        val tableChildrenList = binding.subjectsTable.children.toList()
+        val subjectRows = tableChildrenList.subList(1, tableChildrenList.lastIndex + 1)
+        for (row in subjectRows) { removeSubject(row as TableRow) }
+        binding.resetButton.visibility = View.GONE
     }
 }
