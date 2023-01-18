@@ -96,7 +96,6 @@ class MainActivity : AppCompatActivity() {
         val nameRow = rowViews[0] as TextView
         rowsDict.remove(nameRow.text.toString())
         if (rowsDict.isEmpty()) binding.calcularButton.visibility = View.GONE
-        subjectCount -= 1
         if (subjectCount == 0) binding.resetButton.visibility = View.GONE
     }
 
