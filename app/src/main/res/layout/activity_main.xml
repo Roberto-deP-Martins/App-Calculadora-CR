@@ -85,6 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:text="@string/nomeTextView"
+            android:textSize="@dimen/textSize"
             app:layout_constraintBaseline_toBaselineOf="@+id/nomeEditText"
             app:layout_constraintEnd_toStartOf="@+id/nomeEditText"
             app:layout_constraintHorizontal_bias="0.5"

@@ -54,19 +54,19 @@ class MainActivity : AppCompatActivity() {
                 }
             subjectName.width = binding.nomeHeader.width
             subjectName.textAlignment = View.TEXT_ALIGNMENT_CENTER
-            subjectName.textSize = resources.getDimension(R.dimen.textSize) / resources.displayMetrics.density
+            subjectName.textSize = resources.getDimension(R.dimen.textSize) / resources.displayMetrics.scaledDensity
 
             val subjectGrade = TextView(this)
             subjectGrade.text = binding.notaEditText.text
             subjectGrade.width = binding.notaHeader.width
             subjectGrade.textAlignment = View.TEXT_ALIGNMENT_CENTER
-            subjectGrade.textSize = resources.getDimension(R.dimen.textSize) / resources.displayMetrics.density
+            subjectGrade.textSize = resources.getDimension(R.dimen.textSize) / resources.displayMetrics.scaledDensity
 
             val subjectWeight = TextView(this)
             subjectWeight.text = binding.pesoEditText.text
             subjectWeight.width = binding.pesoHeader.width
             subjectWeight.textAlignment = View.TEXT_ALIGNMENT_CENTER
-            subjectWeight.textSize = resources.getDimension(R.dimen.textSize) / resources.displayMetrics.density
+            subjectWeight.textSize = resources.getDimension(R.dimen.textSize) / resources.displayMetrics.scaledDensity
 
             newRow.addView(subjectName)
             newRow.addView(subjectGrade)
