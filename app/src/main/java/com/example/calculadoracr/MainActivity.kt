@@ -33,6 +33,15 @@ class MainActivity : AppCompatActivity() {
         binding.pesoTextView.width = binding.nomeTextView.width
     }
 
+    private fun setUpRowTextView(text: String, width: Int) : TextView {
+        val newTextView = TextView(this)
+        newTextView.text = text
+        newTextView.width = width
+        newTextView.textAlignment = View.TEXT_ALIGNMENT_CENTER
+        newTextView.textSize = resources.getDimension(R.dimen.textSize) / resources.displayMetrics.scaledDensity
+        return newTextView
+    }
+
     private fun addSubject() {
 
         this.currentFocus?.let { view ->
@@ -44,29 +53,17 @@ class MainActivity : AppCompatActivity() {
             binding.pesoEditText.text.toString().toIntOrNull() != null) {
             val newRow = TableRow(this)
 
-            val subjectName = TextView(this)
-            subjectName.text =
+            val subjectNameText =
                 if (binding.nomeEditText.text.toString() == "") {
                     "❌ ${resources.getString(R.string.disciplinaText)} ${subjectCount + 1}"
                 }
                 else {
-                    "❌" + binding.nomeEditText.text
+                    "❌ " + binding.nomeEditText.text
                 }
-            subjectName.width = binding.nomeHeader.width
-            subjectName.textAlignment = View.TEXT_ALIGNMENT_CENTER
-            subjectName.textSize = resources.getDimension(R.dimen.textSize) / resources.displayMetrics.scaledDensity
 
-            val subjectGrade = TextView(this)
-            subjectGrade.text = binding.notaEditText.text
-            subjectGrade.width = binding.notaHeader.width
-            subjectGrade.textAlignment = View.TEXT_ALIGNMENT_CENTER
-            subjectGrade.textSize = resources.getDimension(R.dimen.textSize) / resources.displayMetrics.scaledDensity
-
-            val subjectWeight = TextView(this)
-            subjectWeight.text = binding.pesoEditText.text
-            subjectWeight.width = binding.pesoHeader.width
-            subjectWeight.textAlignment = View.TEXT_ALIGNMENT_CENTER
-            subjectWeight.textSize = resources.getDimension(R.dimen.textSize) / resources.displayMetrics.scaledDensity
+            val subjectName = setUpRowTextView(subjectNameText, binding.nomeHeader.width)
+            val subjectGrade = setUpRowTextView(binding.notaEditText.text.toString(), binding.notaHeader.width)
+            val subjectWeight = setUpRowTextView( binding.pesoEditText.text.toString(), binding.pesoHeader.width)
 
             newRow.addView(subjectName)
             newRow.addView(subjectGrade)
@@ -106,8 +103,6 @@ class MainActivity : AppCompatActivity() {
             numerador += (i.value.first * i.value.second)
             divisor += i.value.second
         }
-        Log.i("Number Info" ,numerador.toString())
-        Log.i("Number Info" ,divisor.toString())
         binding.CRTextView.text = "%.2f".format(numerador / divisor)
         binding.ApresentaCRTextView.visibility = View.VISIBLE
         binding.CRTextView.visibility = View.VISIBLE
