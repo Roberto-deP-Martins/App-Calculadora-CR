@@ -88,13 +88,13 @@ class MainActivity : AppCompatActivity() {
             newRow.setOnClickListener { removeSubject(newRow) }
             binding.subjectsTable.addView(newRow)
 
-                viewModel.rowsDict[subjectName.text.toString()] =
-                Pair(subjectGrade.text.toString().toFloat(), subjectWeight.text.toString().toInt())
+            viewModel.rowsDict[subjectName.text.toString()] =
+            Pair(subjectGrade.text.toString().toFloat(), subjectWeight.text.toString().toInt())
 
             binding.notaEditText.text.clear()
             binding.nomeEditText.text.clear()
             binding.pesoEditText.text.clear()
-                viewModel.subjectCount += 1
+            viewModel.subjectCount += 1
 
             binding.calcularButton.visibility = View.VISIBLE
             binding.resetButton.visibility = View.VISIBLE
