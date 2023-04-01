@@ -11,16 +11,22 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import com.example.calculadoracr.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private var subjectCount = 0
-    private val rowsDict = mutableMapOf<String, Pair<Float, Int>>()
+    private lateinit var viewModel : MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+
+        if (viewModel.rowsDict.isNotEmpty()) {
+            loadAddedSubjects(viewModel.rowsDict)
+        }
         binding.pesoTextView.setOnClickListener { Toast.makeText(applicationContext,R.string.pesoToast, Toast.LENGTH_SHORT).show() }
         binding.adicionarButton.setOnClickListener { addSubject() }
         binding.calcularButton.setOnClickListener { calculaCR() }
@@ -31,6 +37,17 @@ class MainActivity : AppCompatActivity() {
         super.onWindowFocusChanged(hasFocus)
         binding.notaTextView.width = binding.nomeTextView.width
         binding.pesoTextView.width = binding.nomeTextView.width
+    }
+
+    private fun loadAddedSubjects(map: MutableMap<String, Pair<Float, Int>>) {
+        val newRow = TableRow(this)
+        map.forEach { entry ->
+            newRow.addView(setUpRowTextView(entry.key, binding.nomeHeader.width))  // Nome
+            newRow.addView(setUpRowTextView(entry.value.first.toString(), binding.notaHeader.width))  // Nota
+            newRow.addView(setUpRowTextView(entry.value.second.toString(), binding.pesoHeader.width))  // Peso
+            newRow.setOnClickListener { removeSubject(newRow) }
+            binding.subjectsTable.addView(newRow)
+        }
     }
 
     private fun setUpRowTextView(text: String, width: Int) : TextView {
@@ -44,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun addSubject() {
 
-        this.currentFocus?.let { view ->
+        this.currentFocus?.let { view ->  // Esconde teclado
             val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             imm?.hideSoftInputFromWindow(view.windowToken, 0)
         }
@@ -55,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
             val subjectNameText =
                 if (binding.nomeEditText.text.toString() == "") {
-                    "❌ ${resources.getString(R.string.disciplinaText)} ${subjectCount + 1}"
+                    "❌ ${resources.getString(R.string.disciplinaText)} ${viewModel.subjectCount + 1}"
                 }
                 else {
                     "❌ " + binding.nomeEditText.text
@@ -71,13 +88,13 @@ class MainActivity : AppCompatActivity() {
             newRow.setOnClickListener { removeSubject(newRow) }
             binding.subjectsTable.addView(newRow)
 
-            rowsDict[subjectName.text.toString()] =
+                viewModel.rowsDict[subjectName.text.toString()] =
                 Pair(subjectGrade.text.toString().toFloat(), subjectWeight.text.toString().toInt())
 
             binding.notaEditText.text.clear()
             binding.nomeEditText.text.clear()
             binding.pesoEditText.text.clear()
-            subjectCount += 1
+                viewModel.subjectCount += 1
 
             binding.calcularButton.visibility = View.VISIBLE
             binding.resetButton.visibility = View.VISIBLE
@@ -91,15 +108,15 @@ class MainActivity : AppCompatActivity() {
         binding.subjectsTable.removeView(row)
         val rowViews = row.children.toList()
         val nameRow = rowViews[0] as TextView
-        rowsDict.remove(nameRow.text.toString())
-        if (rowsDict.isEmpty()) binding.calcularButton.visibility = View.GONE
-        if (subjectCount == 0) binding.resetButton.visibility = View.GONE
+        viewModel.rowsDict.remove(nameRow.text.toString())
+        if (viewModel.rowsDict.isEmpty()) binding.calcularButton.visibility = View.GONE
+        if (viewModel.subjectCount == 0) binding.resetButton.visibility = View.GONE
     }
 
     private fun calculaCR() {
         var divisor = 0
         var numerador = 0.0
-        for (i in rowsDict) {
+        for (i in viewModel.rowsDict) {
             numerador += (i.value.first * i.value.second)
             divisor += i.value.second
         }
