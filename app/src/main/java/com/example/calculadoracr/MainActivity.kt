@@ -21,10 +21,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-
         if (viewModel.rowsDict.isNotEmpty()) {
             loadAddedSubjects(viewModel.rowsDict)
         }
