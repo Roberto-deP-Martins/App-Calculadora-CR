@@ -37,6 +37,12 @@ class MainActivity : AppCompatActivity() {
                 binding.resetButton.visibility = View.VISIBLE
             }
         }
+
+        if (viewModel.hasCalculated) {
+            binding.apresentaCRTextView.visibility = View.VISIBLE
+            val result = binding.apresentaCRTextView.text.toString() + " %.2f".format(viewModel.calcutationResult)
+            binding.apresentaCRTextView.text = result
+        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -118,15 +124,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun calculaCR() {
+        viewModel.hasCalculated = true
         var divisor = 0
         var numerador = 0.0
         for (subjectKey in viewModel.rowsDict) {
             numerador += (subjectKey.value.first * subjectKey.value.second)
             divisor += subjectKey.value.second
         }
-        binding.CRTextView.text = "%.2f".format(numerador / divisor)
-        binding.ApresentaCRTextView.visibility = View.VISIBLE
-        binding.CRTextView.visibility = View.VISIBLE
+        val result: Double = numerador / divisor
+        viewModel.calcutationResult = result
+        val crText = resources.getString(R.string.apresentaCR) + " %.2f".format(result)
+        binding.apresentaCRTextView.text = crText
+        binding.apresentaCRTextView.visibility = View.VISIBLE
     }
 
     private fun reset() {
