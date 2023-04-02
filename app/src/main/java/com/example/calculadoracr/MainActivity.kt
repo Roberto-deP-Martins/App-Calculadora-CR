@@ -33,6 +33,8 @@ class MainActivity : AppCompatActivity() {
         binding.root.doOnLayout {
             if (viewModel.rowsDict.isNotEmpty()) {
                 loadAddedSubjects(viewModel.rowsDict)
+                binding.calcularButton.visibility = View.VISIBLE
+                binding.resetButton.visibility = View.VISIBLE
             }
         }
     }
