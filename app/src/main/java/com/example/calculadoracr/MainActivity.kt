@@ -1,5 +1,6 @@
 package com.example.calculadoracr
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -88,13 +89,11 @@ class MainActivity : AppCompatActivity() {
             newRow.setOnClickListener { removeSubject(newRow) }
             binding.subjectsTable.addView(newRow)
 
-            viewModel.rowsDict[subjectName.text.toString()] =
-            Pair(subjectGrade.text.toString().toFloat(), subjectWeight.text.toString().toInt())
+            viewModel.addSubjectData(subjectName.text.toString(), subjectGrade.text.toString().toFloat(), subjectWeight.text.toString().toInt())
 
             binding.notaEditText.text.clear()
             binding.nomeEditText.text.clear()
             binding.pesoEditText.text.clear()
-            viewModel.subjectCount += 1
 
             binding.calcularButton.visibility = View.VISIBLE
             binding.resetButton.visibility = View.VISIBLE
@@ -108,7 +107,7 @@ class MainActivity : AppCompatActivity() {
         binding.subjectsTable.removeView(row)
         val rowViews = row.children.toList()
         val nameRow = rowViews[0] as TextView
-        viewModel.rowsDict.remove(nameRow.text.toString())
+        viewModel.removeSubjectData(nameRow.text.toString())
         if (viewModel.rowsDict.isEmpty()) binding.calcularButton.visibility = View.GONE
         if (viewModel.subjectCount == 0) binding.resetButton.visibility = View.GONE
     }
@@ -116,9 +115,9 @@ class MainActivity : AppCompatActivity() {
     private fun calculaCR() {
         var divisor = 0
         var numerador = 0.0
-        for (i in viewModel.rowsDict) {
-            numerador += (i.value.first * i.value.second)
-            divisor += i.value.second
+        for (subjectKey in viewModel.rowsDict) {
+            numerador += (subjectKey.value.first * subjectKey.value.second)
+            divisor += subjectKey.value.second
         }
         binding.CRTextView.text = "%.2f".format(numerador / divisor)
         binding.ApresentaCRTextView.visibility = View.VISIBLE
