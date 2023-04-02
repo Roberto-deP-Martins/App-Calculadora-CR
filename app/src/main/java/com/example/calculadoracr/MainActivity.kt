@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadAddedSubjects(map: MutableMap<String, Pair<Float, Int>>) {
-        val newRow = TableRow(this)
         map.forEach { entry ->
+            val newRow = TableRow(this)
             newRow.addView(setUpRowTextView(entry.key, binding.nomeHeader.width))  // Nome
             newRow.addView(setUpRowTextView(entry.value.first.toString(), binding.notaHeader.width))  // Nota
             newRow.addView(setUpRowTextView(entry.value.second.toString(), binding.pesoHeader.width))  // Peso
