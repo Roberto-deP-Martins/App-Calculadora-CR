@@ -1,16 +1,15 @@
 package com.example.calculadoracr
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.TableRow
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.children
+import androidx.core.view.doOnLayout
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import com.example.calculadoracr.databinding.ActivityMainBinding
@@ -23,13 +22,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        if (viewModel.rowsDict.isNotEmpty()) {
-            loadAddedSubjects(viewModel.rowsDict)
-        }
+
         binding.pesoTextView.setOnClickListener { Toast.makeText(applicationContext,R.string.pesoToast, Toast.LENGTH_SHORT).show() }
         binding.adicionarButton.setOnClickListener { addSubject() }
         binding.calcularButton.setOnClickListener { calculaCR() }
         binding.resetButton.setOnClickListener { reset() }
+
+        /* root é última view a ter layout feito, portanto, dimensões das views que compõem primeira
+        linha da tabela já terão sido definidas quando o layout da root tiver sido feita */
+        binding.root.doOnLayout {
+            if (viewModel.rowsDict.isNotEmpty()) {
+                loadAddedSubjects(viewModel.rowsDict)
+            }
+        }
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
